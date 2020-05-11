@@ -3,8 +3,11 @@ Cytometry by time-of-flight(CyTOF) data is very useful in studying the presence/
 
 # There are four major steps:
 Step1: Reading .fcs files using read.flowSet function from flowCore R package
+
 Step2: Using Arcsinh transformation to normalize the fcs files. Read more [https://support.cytobank.org/hc/en-us/articles/206148057-About-the-Arcsinh-transform]
+
 Step3: Create a Seurat Object using normalized counts from .fcs files
+
 Step4: Run Dimensionality reduction, clustering and then Visualize cells
 
 # Step1: Reading .fcs files using read.flowSet function from flowCore R package
