@@ -14,7 +14,7 @@ Step5: Integrate Seurat objects to understand simmilarities and differences amon
 
 # Step1: Reading .fcs files using read.flowSet function from flowCore R package
 
-Let's read the .fcs files using read.flowSet
+Let's read the .fcs files using read.flowSet. [Here I am showing analysis tutorial for 2 fcs samples]
 
 fcs_raw1 <- read.flowSet('fcs_raw1.fcs', path = getwd(), transformation = FALSE,  truncate_max_range = FALSE)
 
@@ -84,6 +84,10 @@ fcs_2
 
 # Create Seurat Object using normalized expression from fcs files
 
+Let's create Seurat objects for two fcs samples:
+
+### Seurat Object for first fcs sample
+
 expr_fcs_1 <- fsApply(fcs_1, exprs)
 
 expr_fcs_1 <- as.matrix(t(expr_fcs_1))
@@ -139,3 +143,102 @@ CellsMeta["TimePoint"] <- pd$TimePoint
 CellsMetaTrim <- subset(CellsMeta, select = c("TimePoint"))
 
 Obj_fcs_1 <- AddMetaData(Obj_fcs_1, CellsMetaTrim)
+
+### Seurat Object for second fcs sample
+
+expr_fcs_2 <- fsApply(fcs_2, exprs)
+
+expr_fcs_2 <- as.matrix(t(expr_fcs_2))
+
+Cells <- c()
+
+SampleName <- c()
+
+TimePoint <- c()
+
+for (f in 1:ncol(expr_fcs_2))
+
+{
+
+	a <- paste("sample_",f, sep="")
+	
+	Cells <- c(Cells,a)
+	
+	a <- paste("sample")
+	
+	SampleName <- c(SampleName, a)
+	
+	a <- paste("time")
+	
+	TimePoint <- c(TimePoint, a)
+	
+}
+
+colnames(expr_fcs_2) <- Cells
+
+metadata <- cbind(Cells, SampleName, TimePoint)
+
+metadata <- data.frame(metadata)
+
+pd <- new("AnnotatedDataFrame", data = metadata)
+
+rownames(pd) <- pd$Cells
+
+Obj_fcs_2 <- CreateSeuratObject(expr_fcs_2)
+
+CellsMeta = Obj_fcs_2@meta.data
+
+CellsMeta["SampleName"] <- pd$SampleName
+
+CellsMetaTrim <- subset(CellsMeta, select = c("SampleName"))
+
+Obj_fcs_2 <- AddMetaData(Obj_fcs_2, CellsMetaTrim)
+
+CellsMeta = Obj_fcs_2@meta.data
+
+CellsMeta["TimePoint"] <- pd$TimePoint
+
+CellsMetaTrim <- subset(CellsMeta, select = c("TimePoint"))
+
+Obj_fcs_2 <- AddMetaData(Obj_fcs_2, CellsMetaTrim)
+
+# Step4: Variable feature selection, dimension reduction, clustering and visualization
+
+## For Obj_fcs_1
+VariableFeatures(Obj_fcs_1) <- rownames(Obj_fcs_1)
+
+Obj_fcs_1 <- ScaleData(Obj_fcs_1)
+
+Obj_fcs_1 <- RunPCA(Obj_fcs_1, verbose = TRUE)
+
+Obj_fcs_1 <- FindNeighbors(Obj_fcs_1, dims = 1:10, verbose = TRUE)
+
+Obj_fcs_1 <- FindClusters(Obj_fcs_1, verbose = TRUE)
+
+Obj_fcs_1 <- RunUMAP(Obj_fcs_1, dims = 1:10, verbose = TRUE)
+
+Obj_fcs_1 <- RunTSNE(Obj_fcs_1, dims = 1:10, verbose = TRUE)
+
+DimPlot(Obj_fcs_1, reduction="umap", pt.size=1)
+
+DimPlot(Obj_fcs_1, reduction="tsne", pt.size=1)
+
+## For Obj_fcs_2
+
+VariableFeatures(Obj_fcs_2) <- rownames(Obj_fcs_2)
+
+Obj_fcs_2 <- ScaleData(Obj_fcs_2)
+
+Obj_fcs_2 <- RunPCA(Obj_fcs_2, verbose = TRUE)
+
+Obj_fcs_2 <- FindNeighbors(Obj_fcs_2, dims = 1:10, verbose = TRUE)
+
+Obj_fcs_2 <- FindClusters(Obj_fcs_2, verbose = TRUE)
+
+Obj_fcs_2 <- RunUMAP(Obj_fcs_2, dims = 1:10, verbose = TRUE)
+
+Obj_fcs_2 <- RunTSNE(Obj_fcs_2, dims = 1:10, verbose = TRUE)
+
+DimPlot(Obj_fcs_2, reduction="umap", pt.size=1)
+
+DimPlot(Obj_fcs_2, reduction="tsne", pt.size=1)
