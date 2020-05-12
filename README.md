@@ -95,26 +95,47 @@ SampleName <- c()
 TimePoint <- c()
 
 for (f in 1:ncol(expr_fcs_1))
+
 {
+
 	a <- paste("sample_",f, sep="")
+	
 	Cells <- c(Cells,a)
+	
 	a <- paste("sample")
+	
 	SampleName <- c(SampleName, a)
+	
 	a <- paste("time")
+	
 	TimePoint <- c(TimePoint, a)
+	
 }
+
 colnames(expr_fcs_1) <- Cells
+
 metadata <- cbind(Cells, SampleName, TimePoint)
+
 metadata <- data.frame(metadata)
+
 pd <- new("AnnotatedDataFrame", data = metadata)
+
 rownames(pd) <- pd$Cells
 
 Obj_fcs_1 <- CreateSeuratObject(expr_fcs_1)
+
 CellsMeta = Obj_fcs_1@meta.data
+
 CellsMeta["SampleName"] <- pd$SampleName
+
 CellsMetaTrim <- subset(CellsMeta, select = c("SampleName"))
+
 Obj_fcs_1 <- AddMetaData(Obj_fcs_1, CellsMetaTrim)
+
 CellsMeta = Obj_fcs_1@meta.data
+
 CellsMeta["TimePoint"] <- pd$TimePoint
+
 CellsMetaTrim <- subset(CellsMeta, select = c("TimePoint"))
+
 Obj_fcs_1 <- AddMetaData(Obj_fcs_1, CellsMetaTrim)
