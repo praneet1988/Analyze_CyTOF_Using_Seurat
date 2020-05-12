@@ -265,4 +265,7 @@ Integration.combined <- FindClusters(Integration.combined, resolution = 0.5)
 
 DimPlot(Integration.combined, pt.size=1)
 
+# UMAP Plot after integration (Please Note this is example plot)
+![Graph](IntegrationUMAPPlot.png)
+
 # All the steps here are based on the analysis for determining cell types from CyTOF data and if you are using these steps then please change parameters accordingly
