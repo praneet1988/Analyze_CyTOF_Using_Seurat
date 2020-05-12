@@ -14,13 +14,13 @@ Step5: Integrate Seurat objects to understand simmilarities and differences amon
 
 # Step1: Reading .fcs files using read.flowSet function from flowCore R package
 
-Let's read the .fcs files using read.flowSet. [Here I am showing analysis tutorial for 2 fcs samples]
+## Let's read the .fcs files using read.flowSet. [Here I am showing analysis tutorial for 2 fcs samples]
 
 fcs_raw1 <- read.flowSet('fcs_raw1.fcs', path = getwd(), transformation = FALSE,  truncate_max_range = FALSE)
 
 fcs_raw2 <- read.flowSet('fcs_raw2.fcs', path = getwd(), transformation = FALSE,  truncate_max_range = FALSE)
 
-Let's read the panel file which provides information on the markers
+## Let's read the panel file which provides information on the markers
 
 panel_filename <- "CyTOF_panel.xlsx"
 
@@ -48,7 +48,7 @@ panel_fcs_raw2$desc <- gsub("-", "_", panel_fcs_raw2$desc)
 
 # Step2: Using Arcsinh transformation to normalize the fcs files
 
-Let's perform the Arcsinh transformation
+## Let's perform the Arcsinh transformation for fcs_raw_1 and fcs_raw_2
 
 fcs_1 <- fsApply(fcs_raw1, function(x, cofactor = 5){
 
@@ -84,7 +84,7 @@ fcs_2
 
 # Create Seurat Object using normalized expression from fcs files
 
-Let's create Seurat objects for two fcs samples:
+## Let's create Seurat objects for two fcs samples:
 
 ### Seurat Object for first fcs sample
 
@@ -264,3 +264,5 @@ Integration.combined <- FindNeighbors(Integration.combined, reduction = "pca", d
 Integration.combined <- FindClusters(Integration.combined, resolution = 0.5)
 
 DimPlot(Integration.combined, pt.size=1)
+
+# All the steps here are based on the analysis for determining cell types from CyTOF data and if you are using these steps then please change parameters accordingly
