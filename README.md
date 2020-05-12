@@ -242,3 +242,25 @@ Obj_fcs_2 <- RunTSNE(Obj_fcs_2, dims = 1:10, verbose = TRUE)
 DimPlot(Obj_fcs_2, reduction="umap", pt.size=1)
 
 DimPlot(Obj_fcs_2, reduction="tsne", pt.size=1)
+
+# Step5: Integration of Obj_fcs_1 and Obj_fcs_2 to uncover similarities and differences between cell types from each sample
+
+Integration.anchors <- FindIntegrationAnchors(object.list = list(Obj_fcs_1, Obj_fcs_2), dims = 1:20)
+
+Integration.combined <- IntegrateData(anchorset = Integration.anchors, dims = 1:20)
+
+DefaultAssay(Integration.combined) <- "integrated"
+
+Integration.combined <- ScaleData(Integration.combined)
+
+Integration.combined <- RunPCA(Integration.combined, verbose = TRUE)
+
+Integration.combined <- RunUMAP(Integration.combined, reduction = "pca", dims = 1:10)
+
+Integration.combined <- RunTSNE(Integration.combined, reduction = "pca", dims = 1:10)
+
+Integration.combined <- FindNeighbors(Integration.combined, reduction = "pca", dims = 1:10)
+
+Integration.combined <- FindClusters(Integration.combined, resolution = 0.5)
+
+DimPlot(Integration.combined, pt.size=1)
