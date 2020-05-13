@@ -12,6 +12,18 @@ Step4: Run Dimensionality reduction, clustering and then visualize cells
 
 Step5: Integrate Seurat objects to understand simmilarities and differences among cell-types learnt from each .fcs file
 
+# R packages required
+
+flowCore: https://www.bioconductor.org/packages/release/bioc/html/flowCore.html
+
+Seurat: https://satijalab.org/seurat/install.html
+
+readxl: https://readxl.tidyverse.org/
+
+cowplot: https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html
+
+ggplot2: https://cran.r-project.org/web/packages/ggplot2/index.html
+
 # Step1: Reading .fcs files using read.flowSet function from flowCore R package
 
 ## Let's read the .fcs files using read.flowSet. [Here I am showing analysis tutorial for 2 fcs samples]
@@ -243,7 +255,7 @@ DimPlot(Obj_fcs_2, reduction="umap", pt.size=1)
 
 DimPlot(Obj_fcs_2, reduction="tsne", pt.size=1)
 
-# Step5: Integration of Obj_fcs_1 and Obj_fcs_2 to uncover similarities and differences between cell types from each sample
+# Step5: Integration of Obj_fcs_1 and Obj_fcs_2 to uncover similarities and differences among cell types from each sample
 
 Integration.anchors <- FindIntegrationAnchors(object.list = list(Obj_fcs_1, Obj_fcs_2), dims = 1:20)
 
