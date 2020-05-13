@@ -14,15 +14,15 @@ Step5: Integrate Seurat objects to understand simmilarities and differences amon
 
 # R packages required
 
-##flowCore: https://www.bioconductor.org/packages/release/bioc/html/flowCore.html
+## flowCore: https://www.bioconductor.org/packages/release/bioc/html/flowCore.html
 
-##Seurat: https://satijalab.org/seurat/install.html
+## Seurat: https://satijalab.org/seurat/install.html
 
-##readxl: https://readxl.tidyverse.org/
+## readxl: https://readxl.tidyverse.org/
 
-##cowplot: https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html
+## cowplot: https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html
 
-##ggplot2: https://cran.r-project.org/web/packages/ggplot2/index.html
+## ggplot2: https://cran.r-project.org/web/packages/ggplot2/index.html
 
 # Step1: Reading .fcs files using read.flowSet function from flowCore R package
 
