@@ -10,7 +10,7 @@ Step3: Create a Seurat Object using normalized counts from .fcs files
 
 Step4: Run Dimensionality reduction, clustering and then visualize cells
 
-Step5: Integrate Seurat objects to understand simmilarities and differences among cell-types learnt from each .fcs file
+Step5: Integrate Seurat objects to understand similarities and differences among cell-types learnt from each .fcs file
 
 # R packages required
 
